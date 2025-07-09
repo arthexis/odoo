@@ -1,0 +1,35 @@
+<odoo>
+    <record id="view_energy_subscription_adjust_wizard" model="ir.ui.view">
+        <field name="name">energy.subscription.adjust.wizard.form</field>
+        <field name="model">energy.subscription.adjust.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Adjust Balance">
+                <group>
+                    <field name="subscription_id" readonly="1"/>
+                    <field name="operation"/>
+                    <field name="amount"/>
+                </group>
+                <footer>
+                    <button string="Apply" type="object" name="action_apply" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_energy_subscription_credit" model="ir.actions.act_window">
+        <field name="name">Credit Subscription</field>
+        <field name="res_model">energy.subscription.adjust.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_operation': 'credit'}</field>
+    </record>
+
+    <record id="action_energy_subscription_debit" model="ir.actions.act_window">
+        <field name="name">Debit Subscription</field>
+        <field name="res_model">energy.subscription.adjust.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_operation': 'debit'}</field>
+    </record>
+</odoo>

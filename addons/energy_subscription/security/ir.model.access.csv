@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_energy_subscription_user,energy.subscription,model_energy_subscription,base.group_user,1,1,1,1
+access_energy_bill_user,energy.bill,model_energy_bill,base.group_user,1,1,1,1
+access_energy_subscription_rfid_user,energy.subscription.rfid,model_energy_subscription_rfid,base.group_user,1,1,1,1
+access_energy_subscription_vin_user,energy.subscription.vin,model_energy_subscription_vin,base.group_user,1,1,1,1
+access_energy_subscription_adjust_wizard,energy.subscription.adjust.wizard,model_energy_subscription_adjust_wizard,base.group_user,1,1,1,1

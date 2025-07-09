@@ -1,0 +1,5 @@
+<odoo>
+    <menuitem id="energy_subscription_menu_root" name="Energy"/>
+    <menuitem id="energy_subscription_menu" name="Subscriptions" parent="energy_subscription_menu_root" action="energy_subscription_action"/>
+    <menuitem id="energy_bill_menu" name="Bills" parent="energy_subscription_menu_root" action="energy_bill_action"/>
+</odoo>

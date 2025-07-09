@@ -1,0 +1,104 @@
+<odoo>
+    <record id="energy_subscription_action" model="ir.actions.act_window">
+        <field name="name">Energy Subscriptions</field>
+        <field name="res_model">energy.subscription</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="energy_bill_action" model="ir.actions.act_window">
+        <field name="name">Energy Bills</field>
+        <field name="res_model">energy.bill</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="view_energy_subscription_tree" model="ir.ui.view">
+        <field name="name">energy.subscription.tree</field>
+        <field name="model">energy.subscription</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="kwh_balance"/>
+                <field name="period_months"/>
+                <field name="next_review_date"/>
+                <field name="allow_overcharge"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_energy_subscription_form" model="ir.ui.view">
+        <field name="name">energy.subscription.form</field>
+        <field name="model">energy.subscription</field>
+        <field name="arch" type="xml">
+            <form string="Energy Subscription">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="partner_id"/>
+                        <field name="kwh_balance"/>
+                        <field name="period_months"/>
+                        <field name="next_review_date"/>
+                        <field name="allow_overcharge"/>
+                        <field name="rfid_ids">
+                            <tree editable="bottom">
+                                <field name="rfid_number"/>
+                            </tree>
+                        </field>
+                        <field name="vin_ids">
+                            <tree editable="bottom">
+                                <field name="vin"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <footer>
+                        <button
+                            name="%(action_energy_subscription_credit)d"
+                            string="Credit"
+                            type="action"
+                            context="{'default_subscription_id': active_id}"
+                        />
+                        <button
+                            name="%(action_energy_subscription_debit)d"
+                            string="Debit"
+                            type="action"
+                            context="{'default_subscription_id': active_id}"
+                        />
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_energy_bill_tree" model="ir.ui.view">
+        <field name="name">energy.bill.tree</field>
+        <field name="model">energy.bill</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="subscription_id"/>
+                <field name="partner_id"/>
+                <field name="date"/>
+                <field name="amount_kwh"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_energy_bill_form" model="ir.ui.view">
+        <field name="name">energy.bill.form</field>
+        <field name="model">energy.bill</field>
+        <field name="arch" type="xml">
+            <form string="Energy Bill">
+                <sheet>
+                    <group>
+                        <field name="subscription_id"/>
+                        <field name="partner_id"/>
+                        <field name="date"/>
+                        <field name="amount_kwh"/>
+                    </group>
+                    <footer>
+                        <button string="Print" type="action" name="%(energy_bill_report)d" class="btn-primary"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,19 @@
+<odoo>
+    <record id="energy_bill_report" model="ir.actions.report">
+        <field name="name">Energy Bill</field>
+        <field name="model">energy.bill</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">energy_subscription.report_energy_bill</field>
+    </record>
+
+    <template id="report_energy_bill">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <h2>Energy Bill</h2>
+                <p>Customer: <t t-esc="doc.partner_id.name"/></p>
+                <p>Date: <t t-esc="doc.date"/></p>
+                <p>Amount (kWh): <t t-esc="doc.amount_kwh"/></p>
+            </div>
+        </t>
+    </template>
+</odoo>
