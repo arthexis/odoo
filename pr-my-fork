@@ -1,0 +1,61 @@
+#!/bin/sh
+
+usage() {
+    cat <<USAGE
+Usage: pr-my-fork [gh options]
+
+Create a pull request from the current branch of your fork (arthexis/odoo) to base 'main'.
+Arguments are passed to 'gh pr create'.
+USAGE
+}
+
+case "$1" in
+    -h|--help)
+        usage
+        exit 0
+        ;;
+    *)
+        ;;
+esac
+
+command -v gh >/dev/null 2>&1 || { echo "Error: 'gh' CLI not found." >&2; exit 1; }
+
+if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    echo "Error: not inside a git repository." >&2
+    exit 1
+fi
+
+origin=$(git config --get remote.origin.url)
+case "$origin" in
+    *github.com*arthexis/odoo*) ;;
+    *)
+        cat <<ERR
+Error: origin remote is not your fork (arthexis/odoo).
+Current origin: $origin
+
+Please set origin to your fork and push your branch.
+ERR
+        exit 1
+        ;;
+esac
+
+branch=$(git symbolic-ref --short HEAD)
+
+echo "Ensuring '$branch' is pushed to your fork..."
+if ! git push -u origin "$branch"; then
+    echo "Error: failed to push branch." >&2
+    exit 1
+fi
+
+echo "Creating pull request to 'arthexis/odoo:main'..."
+if ! gh pr create -R arthexis/odoo -B main -H "$branch" "$@"; then
+    echo "Error: gh pr create failed." >&2
+    exit 1
+fi
+
+### EXAMPLE SESSION
+# $ git checkout -b feature-awesome
+# [edit…commit…push]
+# $ pr-my-fork
+# Ensuring 'feature-awesome' is pushed to your fork...
+# Creating pull request to 'arthexis/odoo:main'...
